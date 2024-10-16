@@ -1,4 +1,8 @@
 
+# Guide d'installation
+
+Pour pouvoir jouer au jeu il vous faudra installer python. Il vous faut aussi un éditeur de code ou un IDE (environnement de développement ) dans le quelle python est pris en charge. Une fois ceci fait, ouvret le fichier python (.py) dans votre logiciel et lancé le code.
+
 # Mini Résumé du jeu
 
 La **Bataille Navale** est un jeu de stratégie classique pour deux joueurs, où chacun tente de localiser et de couler les navires de son adversaire en devinant leurs positions sur une grille. Voici un aperçu détaillé des règles du jeu :
