@@ -1,7 +1,11 @@
 
 # Guide d'installation
 
-Pour pouvoir jouer au jeu il vous faudra installer python. Il vous faut aussi un éditeur de code ou un IDE (environnement de développement ) dans le quelle python est pris en charge. Une fois ceci fait, ouvret le fichier python (.py) dans votre logiciel et lancé le code.
+Pour pouvoir jouer au jeu il vous faudra installer python. Il vous faut aussi un éditeur de code ou un IDE (environnement de développement ) dans le quelle python est pris en charge.
+`
+# Lancement
+
+ Une fois ceci fait, ouvrer le fichier python (.py) dans votre logiciel et lancé le code.
 
 # Mini Résumé du jeu
 
@@ -19,8 +23,8 @@ Le but de la Bataille Navale est de couler tous les navires de votre adversaire 
   - 1 Porte-avions (5 cases)
   - 1 Cuirassé (4 cases)
   - 1 Croiseur (3 cases)
-  - 2 Sous-marins (3 cases chacun)
-  - 2 Torpilleurs (2 cases chacun)
+  - 1 Sous-marins (3 cases chacun)
+  - 1 Torpilleurs (2 cases chacun)
 
 ## Mise en Place
 
