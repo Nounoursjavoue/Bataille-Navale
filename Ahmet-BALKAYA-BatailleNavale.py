@@ -1,12 +1,18 @@
 from random import * #utile pour l'ia
 
-def creer_grille():
+def creer_grille(taille):
     """
-    Crée une grille carrée de taille donnée remplie de ".".
+    Crée une grille carrée de taille donnée remplie de "~".
+
+    :param taille: Taille de la grille (int).
     :return: Grille créée (liste de listes).
     """
-    taille_grille = 10 # taille de la grille 
-    grille = [["." for _ in range(taille_grille)] for _ in range(taille_grille)]
+    grille = []
+    for _ in range(taille):
+        ligne = []
+        for _ in range(taille):
+            ligne.append(".")
+        grille.append(ligne)
     return grille
 
 
@@ -19,7 +25,7 @@ def afficher_grille(grille):
     """
     taille = len(grille)
     # Afficher les en-têtes de colonnes
-    en_tetes = "  " + " ".join([chr(65 + i) for i in range(taille)])
+    en_tetes = "   " + " ".join([chr(65 + i) for i in range(taille)])
     print(en_tetes)
     
     # Afficher chaque ligne avec son numéro
@@ -30,6 +36,6 @@ def afficher_grille(grille):
 
 
 
-grille = creer_grille()
+grille = creer_grille(10)
 # Afficher la grille
 afficher_grille(grille)
