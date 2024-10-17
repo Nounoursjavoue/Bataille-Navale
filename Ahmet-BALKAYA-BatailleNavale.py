@@ -1,41 +1,41 @@
-#Utile pour l'IA
-from random import randint
+from random import * #utile pour l'ia
+
+def creer_grille(taille):
+    """
+    Crée une grille carrée de taille donnée remplie de "~".
+
+    :param taille: Taille de la grille (int).
+    :return: Grille créée (liste de listes).
+    """
+    grille = []
+    for _ in range(taille):
+        ligne = []
+        for _ in range(taille):
+            ligne.append(".")
+        grille.append(ligne)
+    return grille
 
 
-#affichage de la grille pour bataille navale
-
-
-# Définir la taille de la grille
-taille_grille = 10
-
-# Créer une grille 10x10 remplie de "~" pour représenter l'eau
-grille = []
-for _ in range(taille_grille):
-    ligne = []
-    for _ in range(taille_grille):
-        ligne.append(".")
-    grille.append(ligne)
-
-# Fonction pour afficher la grille
 def afficher_grille(grille):
+    """
+    Affiche la grille avec les coordonnées.
+
+    :param grille: La grille à afficher (liste de listes).
+    :param afficher_navires: Booléen indiquant si les navires doivent être affichés.
+    """
     taille = len(grille)
     # Afficher les en-têtes de colonnes
-    en_tetes = "  "
-    for i in range(taille):
-        en_tetes += chr(65 + i) + " "
+    en_tetes = "   " + " ".join([chr(65 + i) for i in range(taille)])
     print(en_tetes)
     
     # Afficher chaque ligne avec son numéro
     for index, ligne in enumerate(grille, start=1):
         # Ajouter un espace pour les numéros à un chiffre
-        if index < 10:
-            numero = f"{index} "
-        else:
-            numero = f"{index}"
-        ligne_a_afficher = numero
-        for cellule in ligne:
-            ligne_a_afficher += cellule + " "
-        print(ligne_a_afficher.strip())
+        numero = f"{index} " if index < 10 else f"{index}"
+        print(numero + " " + " ".join(ligne))
 
-# Afficher la grille vide avec coordonnées
+
+
+grille = creer_grille(10)
+# Afficher la grille
 afficher_grille(grille)
