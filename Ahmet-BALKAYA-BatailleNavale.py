@@ -11,12 +11,16 @@ def afficher_grille(grille):
         print(numero + " " + " ".join(ligne))
 
 def creer_grille():
-    # Créer une grille 10x10
-    taille_grille = 10
+    """
+    Crée une grille carrée de taille donnée remplie de ".".
+    :return: Grille créée (liste de listes).
+    """
+    taille_grille = 10 # taille de la grille 
     grille = [["." for _ in range(taille_grille)] for _ in range(taille_grille)]
     return grille
 
 
 grille = creer_grille()
-# Afficher la grille avec coordonnées
+# Afficher la grille
 afficher_grille(grille)
+
