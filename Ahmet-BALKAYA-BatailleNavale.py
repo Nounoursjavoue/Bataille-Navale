@@ -178,7 +178,7 @@ def placer_flotte(grille, nom_joueur):
     :param nom_joueur: Nom du joueur (str).
     """
     print(f"{nom_joueur}, placez vos navires sur la grille.")
-    afficher_grille(grille, afficher_navires=True)
+    afficher_grille(grille, afficher_navires=True) 
     navires = [
         {"nom": "Porte-avions", "longueur": 5, "quantité": 1},
         {"nom": "Cuirassé", "longueur": 4, "quantité": 1},
