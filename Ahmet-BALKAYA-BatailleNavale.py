@@ -2,7 +2,7 @@ from random import * #utile pour l'ia
 
 def creer_grille(taille):
     """
-    Crée une grille carrée de taille donnée remplie de "~".
+    Crée une grille carrée de taille donnée remplie de ".".
 
     :param taille: Taille de la grille (int).
     :return: Grille créée (liste de listes).
