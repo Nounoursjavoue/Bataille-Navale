@@ -183,8 +183,8 @@ def placer_flotte(grille, nom_joueur):
         {"nom": "Porte-avions", "longueur": 5, "quantité": 1},
         {"nom": "Cuirassé", "longueur": 4, "quantité": 1},
         {"nom": "Croiseur", "longueur": 3, "quantité": 1},
-        {"nom": "Sous-marin", "longueur": 3, "quantité": 2},
-        {"nom": "Torpilleur", "longueur": 2, "quantité": 2}
+        {"nom": "Sous-marin", "longueur": 3, "quantité": 1},
+        {"nom": "Torpilleur", "longueur": 2, "quantité": 1}
     ]
 
     for navire in navires:
@@ -215,3 +215,83 @@ def placer_flotte(grille, nom_joueur):
                 else:
                     print("Réessayez de placer ce navire.")
     input("Tous les navires ont été placés. Passons au prochain joueur. Appuyez sur Entrée pour continuer.")
+    
+def jouer_bataille_navale():
+    """
+    Fonction principale pour jouer à la Bataille Navale à deux joueurs.
+    """
+    taille_grille = 10
+    # Création des grilles pour les deux joueurs
+    grille_joueur1_defense = creer_grille(taille_grille)
+    grille_joueur1_attaque = creer_grille(taille_grille)
+    grille_joueur2_defense = creer_grille(taille_grille)
+    grille_joueur2_attaque = creer_grille(taille_grille)
+
+    # Noms des joueurs
+    nom_joueur1 = input("Entrez le nom du Joueur 1: ")
+    nom_joueur2 = input("Entrez le nom du Joueur 2: ")
+
+    # Placement des navires pour le Joueur 1
+  
+    placer_flotte(grille_joueur1_defense, nom_joueur1)
+
+    # Placement des navires pour le Joueur 2
+
+    placer_flotte(grille_joueur2_defense, nom_joueur2)
+
+    # Début du jeu
+    jeu_en_cours = True
+    joueur_actuel = 1  # 1 ou 2
+
+    while jeu_en_cours:
+        if joueur_actuel == 1:
+            nom_actuel = nom_joueur1
+            grille_defense_adverse = grille_joueur2_defense
+            grille_attaque_actuel = grille_joueur1_attaque
+        else:
+            nom_actuel = nom_joueur2
+            grille_defense_adverse = grille_joueur1_defense
+            grille_attaque_actuel = grille_joueur2_attaque
+
+        print(f"{nom_actuel}, c'est votre tour d'attaquer.")
+        print("Votre grille d'attaque :")
+        afficher_grille(grille_attaque_actuel)
+        print("Entrez votre tir.")
+        tir_valide = False
+        while not tir_valide:
+            cible = input("Entrez la coordonnée du tir (ex: B5): ").upper()
+            resultat = effectuer_tir(grille_defense_adverse, cible)
+            if resultat == "Coordonnée invalide.":
+                print(resultat)
+                continue
+            elif resultat == "Déjà tiré ici.":
+                print(resultat)
+                continue
+            else:
+                tir_valide = True
+                # Mettre à jour la grille d'attaque
+                colonne = cible[0]
+                ligne = int(cible[1:])
+                colonne_index = ord(colonne) - 65
+                ligne_index = ligne - 1
+                grille_attaque_actuel[ligne_index][colonne_index] = "T" if resultat.startswith("Touché") else "O"
+                print(f"Tir à {cible}: {resultat}")
+                # Afficher les grilles
+                print("\nVotre grille d'attaque après le tir :")
+                afficher_grille(grille_attaque_actuel)
+                print("\nGrille de défense adverse :")
+                afficher_grille(grille_defense_adverse, afficher_navires=False)
+                # Vérifier la fin du jeu
+                if resultat.startswith("Touché et Coulé!") or all(cell != "N" for ligne in grille_defense_adverse for cell in ligne):
+                    print(f"\nFélicitations {nom_actuel}! Vous avez coulé tous les navires de l'adversaire.")
+                    jeu_en_cours = False
+        # Changer de joueur
+        joueur_actuel = 2 if joueur_actuel == 1 else 1
+        if jeu_en_cours:
+            input("Passons au prochain joueur. Appuyez sur Entrée pour continuer.")
+            
+
+    print("Fin du jeu. Merci d'avoir joué à la Bataille Navale!")
+
+if __name__ == "__main__":
+    jouer_bataille_navale()
