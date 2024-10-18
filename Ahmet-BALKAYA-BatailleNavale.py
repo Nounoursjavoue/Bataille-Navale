@@ -107,3 +107,111 @@ def placer_navire(grille, ligne_depart, colonne_depart, longueur, orientation):
             grille[ligne_index + i][colonne_index] = "$"
 
     return True
+
+def effectuer_tir(grille, cible):
+    """
+    Effectue un tir sur la grille.
+
+    :param grille: La grille de défense (liste de listes).
+    :param cible: Coordonnée du tir (ex: 'B5').
+    :return: Résultat du tir ('Manqué', 'Touché', 'Coulé').
+    """
+    longueur_cible = len(cible)
+    if longueur_cible < 2:
+        return "Coordonnée invalide."
+
+    colonne = cible[0].upper()
+    ligne_str = cible[1:]
+
+    # Validation de la colonne
+    if colonne.isalpha() and len(colonne) == 1:
+        colonne_index = ord(colonne) - 65
+        colonne_dans_limites = 0 <= colonne_index < len(grille)
+    else:
+        colonne_dans_limites = False
+
+    if colonne_dans_limites:
+        pass
+    else:
+        return "Coordonnée invalide."
+
+    # Validation de la ligne
+    if ligne_str.isdigit():
+        ligne = int(ligne_str)
+        ligne_index = ligne - 1
+        ligne_dans_limites = 0 <= ligne_index < len(grille)
+    else:
+        ligne_dans_limites = False
+
+    if ligne_dans_limites:
+        pass
+    else:
+        return "Coordonnée invalide."
+
+    # Vérification de la cellule ciblée
+    cellule = grille[ligne_index][colonne_index]
+    if cellule == "N":
+        grille[ligne_index][colonne_index] = "T"  # 'T' pour Touché
+        # Vérification si le navire est coulé
+        navire_coule = True
+        for ligne_grille in grille:
+            if "N" in ligne_grille:
+                navire_coule = False
+                break
+        if navire_coule:
+            return "Touché et Coulé!"
+        else:
+            return "Touché!"
+    elif cellule == ".":
+        grille[ligne_index][colonne_index] = "O"  # 'O' pour Manqué
+        return "Manqué."
+    elif cellule == "T" or cellule == "O":
+        return "Déjà tiré ici."
+    else:
+        return "État de cellule inconnu."
+
+def placer_flotte(grille, nom_joueur):
+    """
+    Permet à un joueur de placer sa flotte de navires sur sa grille.
+
+    :param grille: La grille de défense du joueur (liste de listes).
+    :param nom_joueur: Nom du joueur (str).
+    """
+    print(f"{nom_joueur}, placez vos navires sur la grille.")
+    afficher_grille(grille, afficher_navires=True)
+    navires = [
+        {"nom": "Porte-avions", "longueur": 5, "quantité": 1},
+        {"nom": "Cuirassé", "longueur": 4, "quantité": 1},
+        {"nom": "Croiseur", "longueur": 3, "quantité": 1},
+        {"nom": "Sous-marin", "longueur": 3, "quantité": 2},
+        {"nom": "Torpilleur", "longueur": 2, "quantité": 2}
+    ]
+
+    for navire in navires:
+        for _ in range(navire["quantité"]):
+            placement_reussi = False
+            while not placement_reussi:
+                print(f"Placer un {navire['nom']} (Longueur: {navire['longueur']})")
+                entree = input("Entrez la position et l'orientation (ex: C3 H): ").upper().split()
+                if len(entree) != 2:
+                    print("Entrée invalide. Veuillez entrer la position et l'orientation séparées par un espace.")
+                    continue
+                position, orientation = entree
+                if len(position) < 2:
+                    print("Position invalide. Exemple valide: C3")
+                    continue
+                colonne_depart = position[0]
+                ligne_depart_str = position[1:]
+                if not ligne_depart_str.isdigit():
+                    print("Ligne invalide. Exemple valide: C3")
+                    continue
+                ligne_depart = int(ligne_depart_str)
+                if orientation not in ['H', 'V']:
+                    print("Orientation invalide. Utilisez 'H' pour horizontal ou 'V' pour vertical.")
+                    continue
+                placement_reussi = placer_navire(grille, ligne_depart, colonne_depart, navire["longueur"], orientation)
+                if placement_reussi:
+                    afficher_grille(grille, afficher_navires=True)
+                else:
+                    print("Réessayez de placer ce navire.")
+    input("Tous les navires ont été placés. Passons au prochain joueur. Appuyez sur Entrée pour continuer.")
