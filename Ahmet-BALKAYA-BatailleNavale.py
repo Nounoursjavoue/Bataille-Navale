@@ -292,6 +292,7 @@ def jouer_bataille_navale():
             
 
     print("Fin du jeu. Merci d'avoir joué à la Bataille Navale!")
-
+    
+    
 if __name__ == "__main__":
     jouer_bataille_navale()
