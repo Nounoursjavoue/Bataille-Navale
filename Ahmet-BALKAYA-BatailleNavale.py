@@ -1,4 +1,4 @@
-from random import * #utile pour l'ia
+import random
 
 def creer_grille(taille):
     """
@@ -15,8 +15,7 @@ def creer_grille(taille):
         grille.append(ligne)
     return grille
 
-
-def afficher_grille(grille):
+def afficher_grille(grille, afficher_navires=False):
     """
     Affiche la grille avec les coordonnées.
 
@@ -25,14 +24,24 @@ def afficher_grille(grille):
     """
     taille = len(grille)
     # Afficher les en-têtes de colonnes
-    en_tetes = "   " + " ".join([chr(65 + i) for i in range(taille)])
+    en_tetes = "  "
+    for i in range(taille):
+        en_tetes += chr(65 + i) + " " # Utilisation de la table ascii pour facilitez l'affichage
     print(en_tetes)
-    
+
     # Afficher chaque ligne avec son numéro
-    for index, ligne in enumerate(grille, start=1):
-        # Ajouter un espace pour les numéros à un chiffre
-        numero = f"{index} " if index < 10 else f"{index}"
-        print(numero + " " + " ".join(ligne))
+    for indice, ligne in enumerate(grille, start=1):
+        if indice < 10:
+            numero = f"{indice} "
+        else:
+            numero = f"{indice}"
+        ligne_a_afficher = numero
+        for cellule in ligne:
+            if cellule == "$" and not afficher_navires:
+                ligne_a_afficher += ". "
+            else:
+                ligne_a_afficher += cellule + " "
+        print(ligne_a_afficher.strip())
 
 def placer_navire(grille, ligne_depart, colonne_depart, longueur, orientation):
     """
@@ -108,6 +117,7 @@ def placer_navire(grille, ligne_depart, colonne_depart, longueur, orientation):
 
     return True
 
+
 def effectuer_tir(grille, cible):
     """
     Effectue un tir sur la grille.
@@ -181,10 +191,10 @@ def placer_flotte(grille, nom_joueur):
     afficher_grille(grille, afficher_navires=True)
     navires = [
         {"nom": "Porte-avions", "longueur": 5, "quantité": 1},
-        {"nom": "Cuirassé", "longueur": 4, "quantité": 1},
-        {"nom": "Croiseur", "longueur": 3, "quantité": 1},
-        {"nom": "Sous-marin", "longueur": 3, "quantité": 1},
-        {"nom": "Torpilleur", "longueur": 2, "quantité": 1}
+        {"nom": "Cuirassé", "longueur": 4, "quantité": 0},
+        {"nom": "Croiseur", "longueur": 3, "quantité": 0},
+        {"nom": "Sous-marin", "longueur": 3, "quantité": 0},
+        {"nom": "Torpilleur", "longueur": 2, "quantité": 0}
     ]
 
     for navire in navires:
@@ -215,7 +225,7 @@ def placer_flotte(grille, nom_joueur):
                 else:
                     print("Réessayez de placer ce navire.")
     input("Tous les navires ont été placés. Passons au prochain joueur. Appuyez sur Entrée pour continuer.")
-    
+
 def jouer_bataille_navale():
     """
     Fonction principale pour jouer à la Bataille Navale à deux joueurs.
@@ -293,6 +303,6 @@ def jouer_bataille_navale():
 
     print("Fin du jeu. Merci d'avoir joué à la Bataille Navale!")
     
-    
+# commencer du jeu    
 if __name__ == "__main__":
     jouer_bataille_navale()
