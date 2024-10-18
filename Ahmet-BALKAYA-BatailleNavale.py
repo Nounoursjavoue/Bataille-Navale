@@ -1,4 +1,4 @@
-import random
+import random # utile pour l'ia 
 
 def creer_grille(taille):
     """
